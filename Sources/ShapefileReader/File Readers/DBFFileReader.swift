@@ -45,6 +45,11 @@ final class DBFFileReader {
         return records
     }
 
+    func readRecord(at offset: Int) throws -> InfoRecord {
+        let record = try readRecord(at: UInt64(offset))
+        return record
+    }
+
     private func readHeader() throws -> Header {
         try fileHandle.seek(toOffset: 0)
 

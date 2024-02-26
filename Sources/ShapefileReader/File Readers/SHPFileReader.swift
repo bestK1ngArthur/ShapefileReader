@@ -33,6 +33,11 @@ final class SHPFileReader {
         return shapes
     }
 
+    func readShape(at offset: Int) throws -> Shape? {
+        let shape = try readShape(at: UInt64(offset))?.shape
+        return shape
+    }
+
     private func readHeader() throws -> Header {
         try fileHandle.seek(toOffset: 24)
 
