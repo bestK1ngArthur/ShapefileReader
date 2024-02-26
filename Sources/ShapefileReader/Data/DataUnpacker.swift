@@ -18,7 +18,7 @@ final class DataUnpacker {
     static func unpack(
         _ data: Data,
         with format: String,
-        stringEncoding: String.Encoding = .windowsCP1252
+        stringEncodings: [String.Encoding] = [.windowsCP1252]
     ) throws -> [Value] {
         assert(
             Int(OSHostByteOrder()) == OSLittleEndian,
@@ -53,18 +53,24 @@ final class DataUnpacker {
                 let length = max(n,1)
                 let sub = Array(bytes[location..<location+length])
 
-                guard 
-                    let string = NSString(
+                var string: String?
+                for stringEncoding in stringEncodings {
+                    if let encodedString = NSString(
                         bytes: sub,
                         length: length,
                         encoding: stringEncoding.rawValue
-                    )
-                else {
+                    ) {
+                        string = encodedString as String
+                        break
+                    }
+                }
+
+                guard let string else {
                     assertionFailure("It's not a string: \(sub)")
                     return []
                 }
 
-                values.append(.string(string as String))
+                values.append(.string(string))
                 
                 location += length
                 n = 0
