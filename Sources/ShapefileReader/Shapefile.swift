@@ -5,6 +5,14 @@ public struct Shapefile: Equatable {
     public let zRange: ClosedRange<Double>?
     public let mRange: ClosedRange<Double>?
     public let shapes: [Shape?]
+    public let records: [InfoRecord]
+}
+
+public extension Shapefile {
+
+    var shapesAndRecords: [(shape: Shape?, record: InfoRecord)] {
+        Array(zip(shapes, records))
+    }
 }
 
 // MARK: Bounding Box
@@ -42,4 +50,26 @@ extension Shapefile {
             self.shx = .init(fileURLWithPath: "\(pathToFiles).shx")
         }
     }
+}
+
+// MARK: InfoRecord
+
+extension Shapefile {
+
+    public struct InfoProperty: Equatable {
+
+        public enum Value: Equatable {
+            case character(Character)
+            case date(Date)
+            case double(Double)
+            case int(Int)
+            case bool(Bool)
+            case string(String)
+        }
+
+        let name: String
+        let value: Value
+    }
+
+    public typealias InfoRecord = [InfoProperty]
 }
