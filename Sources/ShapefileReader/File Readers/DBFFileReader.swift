@@ -105,11 +105,10 @@ final class DBFFileReader {
         )[0].string!
         assert(terminator == "\r", "Unexpected terminator")
 
-        let totalSize = fieldDescriptors
-            .map(\.size)
-            .reduce(0, +)
-        let recordFormat = "<" + fieldDescriptors
-            .map { "\($0.size)\($0.type.byteCharacter)" }
+        let recordSizes = fieldDescriptors.map(\.size)
+        let totalSize = recordSizes.reduce(0, +)
+        let recordFormat = "<" + recordSizes
+            .map { String($0) + "s" }
             .joined(separator: "")
 
         if totalSize != recordSize {
@@ -229,21 +228,5 @@ private extension DBFFileReader {
         case floating = "F"
         case logical = "L"
         case memo = "M"
-    }
-}
-
-private extension DBFFileReader.FieldType {
-
-    var byteCharacter: String {
-        switch self {
-            case .character, .date, .memo:
-                return "s"
-            case .decimal:
-                return "i"
-            case .floating:
-                return "d"
-            case .logical:
-                return "?"
-        }
     }
 }
