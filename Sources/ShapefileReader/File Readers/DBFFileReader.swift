@@ -154,11 +154,7 @@ final class DBFFileReader {
             var value: InfoProperty.Value
             switch field.type {
                 case .character:
-                    if let character = trimmedValue.first {
-                        value = .character(character)
-                    } else {
-                        continue
-                    }
+                    value = .string(trimmedValue)
 
                 case .date:
                     if let date = valueDateFormatter.date(from: trimmedValue) {

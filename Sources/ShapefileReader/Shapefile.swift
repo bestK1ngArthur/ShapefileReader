@@ -59,7 +59,6 @@ extension Shapefile {
     public struct InfoProperty: Equatable {
 
         public enum Value: Equatable {
-            case character(Character)
             case date(Date)
             case double(Double)
             case int(Int)
