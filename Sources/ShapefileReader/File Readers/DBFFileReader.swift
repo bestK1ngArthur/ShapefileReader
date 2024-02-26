@@ -90,13 +90,22 @@ final class DBFFileReader {
             )
         }
 
+        fieldDescriptors.append(
+            .init(
+                name: "DeletionFlag",
+                type: .character,
+                size: 1,
+                isDecimal: false
+            )
+        )
+
         let terminator = try DataUnpacker.unpack(
             fileHandle.readData(ofLength: 1),
             with: "<s"
         )[0].string!
         assert(terminator == "\r", "Unexpected terminator")
 
-        let recordSizes = fieldDescriptors.map(\.size) + [1]
+        let recordSizes = fieldDescriptors.map(\.size)
         let totalSize = recordSizes.reduce(0, +)
         let recordFormat = "<" + recordSizes
             .map { String($0) + "s" }
@@ -135,6 +144,10 @@ final class DBFFileReader {
         var properties: [InfoProperty] = []
 
         for (field, valueString) in Array(zip(header.fieldDescriptors, contentValues)) {
+            if field.name == "DeletionFlag" {
+                continue
+            }
+
             let trimmedValue = valueString.trimmingCharacters(in: CharacterSet.whitespaces)
 
             var value: InfoProperty.Value
