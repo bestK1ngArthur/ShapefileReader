@@ -90,13 +90,14 @@ final class DBFFileReader {
             )
         }
 
-        fieldDescriptors.append(
+        fieldDescriptors.insert(
             .init(
                 name: "DeletionFlag",
                 type: .character,
                 size: 1,
                 isDecimal: false
-            )
+            ),
+            at: 0
         )
 
         let terminator = try DataUnpacker.unpack(
