@@ -96,7 +96,7 @@ final class DBFFileReader {
         )[0].string!
         assert(terminator == "\r", "Unexpected terminator")
 
-        let recordSizes = fieldDescriptors.map(\.size)
+        let recordSizes = fieldDescriptors.map(\.size) + [1]
         let totalSize = recordSizes.reduce(0, +)
         let recordFormat = "<" + recordSizes
             .map { String($0) + "s" }
