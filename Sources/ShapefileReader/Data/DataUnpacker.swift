@@ -60,7 +60,7 @@ final class DataUnpacker {
                         encoding: stringEncoding.rawValue
                     )
                 else {
-                    assertionFailure("-- not a string: \(sub)")
+                    assertionFailure("It's not a string: \(sub)")
                     return []
                 }
 
