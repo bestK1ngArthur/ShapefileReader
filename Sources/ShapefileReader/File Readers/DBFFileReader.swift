@@ -131,7 +131,7 @@ final class DBFFileReader {
         let contentValues = try DataUnpacker.unpack(
             fileHandle.readData(ofLength: header.recordSize),
             with: header.recordFormat,
-            stringEncodings: [.unicode, .windowsCP1252]
+            stringEncodings: [.windowsCP1252, .unicode]
         ).map { $0.string! }
 
 //        let isDeletedRecord = contentValues.first != " "
