@@ -102,6 +102,10 @@ final class DBFFileReader {
             .map { String($0) + "s" }
             .joined(separator: "")
 
+        if totalSize != recordSize {
+            assertionFailure("Invalid total record sizes")
+        }
+
         return .init(
             lastUpdateDate: lastUpdateDate,
             recordsCount: recordsCount,
@@ -121,10 +125,10 @@ final class DBFFileReader {
             stringEncodings: [.unicode, .windowsCP1252]
         ).map { $0.string! }
 
-        let isDeletedRecord = contentValues.first != " "
-        if isDeletedRecord {
-            return []
-        }
+//        let isDeletedRecord = contentValues.first != " "
+//        if isDeletedRecord {
+//            return []
+//        }
 
         assert(header.fieldDescriptors.count == contentValues.count, "Invalid content count")
 
