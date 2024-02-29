@@ -1,6 +1,7 @@
 import Foundation
 
 public struct Shapefile: Equatable {
+
     public let minBoundingBox: BoundingBox
     public let zRange: ClosedRange<Double>?
     public let mRange: ClosedRange<Double>?
@@ -8,10 +9,14 @@ public struct Shapefile: Equatable {
     public let records: [InfoRecord]
 }
 
-public extension Shapefile {
+extension Shapefile {
 
-    var shapesAndRecords: [(shape: Shape?, record: InfoRecord)] {
-        Array(zip(shapes, records))
+    public var shapesAndRecords: [(shape: Shape?, record: InfoRecord)] {
+        guard shapes.count == records.count else {
+            fatalError("Shapes and records count not match")
+        }
+
+        return Array(zip(shapes, records))
     }
 }
 
@@ -20,6 +25,7 @@ public extension Shapefile {
 extension Shapefile {
 
     public struct BoundingBox: Equatable {
+
         public let xMin: Double
         public let yMin: Double
         public let xMax: Double
@@ -34,6 +40,7 @@ extension Shapefile {
 extension Shapefile {
 
     public struct Path {
+
         let shp: URL
         let dbf: URL
         let shx: URL
@@ -50,25 +57,4 @@ extension Shapefile {
             self.shx = .init(fileURLWithPath: "\(pathToFiles).shx")
         }
     }
-}
-
-// MARK: InfoRecord
-
-extension Shapefile {
-
-    public struct InfoProperty: Equatable {
-
-        public enum Value: Equatable {
-            case date(Date)
-            case double(Double)
-            case int(Int)
-            case bool(Bool)
-            case string(String)
-        }
-
-        public let name: String
-        public let value: Value
-    }
-
-    public typealias InfoRecord = [InfoProperty]
 }
