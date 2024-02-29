@@ -173,3 +173,37 @@ public extension Partable {
         return pointsByParts
     }
 }
+
+public extension Shapefile.Shape {
+
+    var partable: Partable? {
+        switch self {
+            case .point:
+                return nil
+            case .polyLine(let polyLine):
+                return polyLine
+            case .polygon(let polygon):
+                return polygon
+            case .multiPoint:
+                return nil
+            case .pointZ:
+                return nil
+            case .polyLineZ(let polyLineZ):
+                return polyLineZ
+            case .polygonZ(let polygonZ):
+                return polygonZ
+            case .multiPointZ:
+                return nil
+            case .pointM:
+                return nil
+            case .polyLineM(let polyLineM):
+                return polyLineM
+            case .polygonM(let polygonM):
+                return polygonM
+            case .multiPointM:
+                return nil
+            case .multiPatch(let multiPatch):
+                return multiPatch
+        }
+    }
+}
