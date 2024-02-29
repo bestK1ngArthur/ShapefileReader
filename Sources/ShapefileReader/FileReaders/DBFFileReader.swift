@@ -159,7 +159,8 @@ final class DBFFileReader {
             var value: InfoProperty.Value
             switch field.type {
                 case .character:
-                    value = .string(trimmedValue)
+                    let string = trimmedValue.replacingOccurrences(of: "\0", with: "")
+                    value = .string(string)
 
                 case .date:
                     if let date = valueDateFormatter.date(from: trimmedValue) {
