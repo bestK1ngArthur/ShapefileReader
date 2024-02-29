@@ -144,6 +144,40 @@ extension Shapefile.Shape {
     }
 }
 
+public extension Shapefile.Shape {
+
+    var minBoundingBox: Shapefile.BoundingBox? {
+        switch self {
+            case .point:
+                return nil
+            case .polyLine(let polyLine):
+                return polyLine.minBoundingBox
+            case .polygon(let polygon):
+                return polygon.minBoundingBox
+            case .multiPoint(let multiPoint):
+                return multiPoint.minBoundingBox
+            case .pointZ:
+                return nil
+            case .polyLineZ(let polyLineZ):
+                return polyLineZ.minBoundingBox
+            case .polygonZ(let polygonZ):
+                return polygonZ.minBoundingBox
+            case .multiPointZ(let multiPointZ):
+                return multiPointZ.minBoundingBox
+            case .pointM:
+                return nil
+            case .polyLineM(let polyLineM):
+                return polyLineM.minBoundingBox
+            case .polygonM(let polygonM):
+                return polygonM.minBoundingBox
+            case .multiPointM(let multiPointM):
+                return multiPointM.minBoundingBox
+            case .multiPatch(let multiPatch):
+                return multiPatch.minBoundingBox
+        }
+    }
+}
+
 // MARK: Partable
 
 public protocol Partable {
