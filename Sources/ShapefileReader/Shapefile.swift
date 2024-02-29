@@ -66,8 +66,8 @@ extension Shapefile {
             case string(String)
         }
 
-        let name: String
-        let value: Value
+        public let name: String
+        public let value: Value
     }
 
     public typealias InfoRecord = [InfoProperty]
