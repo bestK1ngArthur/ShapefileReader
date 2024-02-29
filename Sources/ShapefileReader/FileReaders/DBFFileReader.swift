@@ -76,6 +76,7 @@ final class DBFFileReader {
             )
 
             let name = fieldDescriptorValues[0].string!
+                .trimmingCharacters(in: CharacterSets.invalid)
             let typeCharacter = fieldDescriptorValues[1].string!
             let size = fieldDescriptorValues[2].int!
             let isDecimal = fieldDescriptorValues[3].int! == 1
@@ -155,12 +156,11 @@ final class DBFFileReader {
             }
 
             let trimmedValue = valueString.trimmingCharacters(in: CharacterSet.whitespaces)
-            let invalidCharacters = CharacterSet(charactersIn: "\0")
 
             var value: InfoProperty.Value
             switch field.type {
                 case .character:
-                    let string = trimmedValue.trimmingCharacters(in: invalidCharacters)
+                    let string = trimmedValue.trimmingCharacters(in: CharacterSets.invalid)
                     value = .string(string)
 
                 case .date:
@@ -232,5 +232,9 @@ private extension DBFFileReader {
         case floating = "F"
         case logical = "L"
         case memo = "M"
+    }
+
+    enum CharacterSets {
+        static let invalid = CharacterSet(charactersIn: "\0")
     }
 }
