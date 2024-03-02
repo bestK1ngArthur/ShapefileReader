@@ -1,5 +1,7 @@
 import Foundation
 
+/// `.dbf` format file reader
+/// [Link to Format Documentation](https://www.oocities.org/geoff_wass/dBASE/GaryWhite/dBASE/)
 final class DBFFileReader {
 
     typealias InfoRecord = Shapefile.InfoRecord
@@ -8,7 +10,7 @@ final class DBFFileReader {
     private let fileHandle: FileHandle
     private var header: Header!
 
-    private let dateFormatter = {
+    private let headerDateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
@@ -59,7 +61,7 @@ final class DBFFileReader {
         ).map { $0.int! }
 
         let lastUpdateString = "\(1900+values[1])-\(String(format: "%02d", values[2]))-\(String(format: "%02d", values[3]))"
-        guard let lastUpdateDate = dateFormatter.date(from: lastUpdateString) else {
+        guard let lastUpdateDate = headerDateFormatter.date(from: lastUpdateString) else {
             fatalError("Can't find last update date")
         }
 
@@ -140,11 +142,6 @@ final class DBFFileReader {
             with: header.recordFormat,
             stringEncodings: [.windowsCP1252, .unicode]
         ).map { $0.string! }
-
-//        let isDeletedRecord = contentValues.first != " "
-//        if isDeletedRecord {
-//            return []
-//        }
 
         assert(header.fieldDescriptors.count == contentValues.count, "Invalid content count")
 

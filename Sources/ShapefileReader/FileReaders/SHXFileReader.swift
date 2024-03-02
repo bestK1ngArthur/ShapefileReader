@@ -1,5 +1,6 @@
 import Foundation
 
+/// `.shx` format file reader
 final class SHXFileReader {
 
     private let fileHandle: FileHandle

@@ -1,5 +1,7 @@
 import Foundation
 
+/// `.shp` format file reader
+/// [Link to Format Documentation](https://www.esri.com/library/whitepapers/pdfs/shapefile.pdf)
 final class SHPFileReader {
 
     typealias BoundingBox = Shapefile.BoundingBox

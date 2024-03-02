@@ -7,16 +7,9 @@ public struct Shapefile: Equatable {
     public let mRange: ClosedRange<Double>?
     public let shapes: [Shape?]
     public let records: [InfoRecord]
-}
-
-extension Shapefile {
 
     public var shapesAndRecords: [(shape: Shape?, record: InfoRecord)] {
-        guard shapes.count == records.count else {
-            fatalError("Shapes and records count not match")
-        }
-
-        return Array(zip(shapes, records))
+        Array(zip(shapes, records))
     }
 }
 
@@ -51,10 +44,11 @@ extension Shapefile {
             self.shx = shx
         }
 
-        public init(pathToFiles: String) {
-            self.shp = .init(fileURLWithPath: "\(pathToFiles).shp")
-            self.dbf = .init(fileURLWithPath: "\(pathToFiles).dbf")
-            self.shx = .init(fileURLWithPath: "\(pathToFiles).shx")
+        public init(pathToFilesWithEqualName filePath: String) {
+            self.shp = .init(fileURLWithPath: "\(filePath).shp")
+            self.dbf = .init(fileURLWithPath: "\(filePath).dbf")
+            self.shx = .init(fileURLWithPath: "\(filePath).shx")
         }
     }
 }
+
