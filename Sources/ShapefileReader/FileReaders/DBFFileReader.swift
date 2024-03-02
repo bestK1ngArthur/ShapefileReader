@@ -32,23 +32,26 @@ final class DBFFileReader {
     }
 
     func readRecords() throws -> [InfoRecord] {
-        try fileHandle.seek(toOffset: 0)
-
         assert(header.headerSize != 0, "Empty header")
+        try fileHandle.seek(toOffset: 0)
 
         var records: [InfoRecord] = []
 
-        for i in 0..<header.recordsCount {
-            let offset = header.headerSize + (i * header.recordSize)
-            let record = try readRecord(at: UInt64(offset))
+        for index in 0..<header.recordsCount {
+            let offset = offset(for: index)
+            let record = try readRecord(at: offset)
             records.append(record)
         }
 
         return records
     }
 
-    func readRecord(at offset: Int) throws -> InfoRecord {
-        let record = try readRecord(at: UInt64(offset))
+    func readRecord(at index: Int) throws -> InfoRecord {
+        assert(header.headerSize != 0, "Empty header")
+
+        let offset = offset(for: index)
+        let record = try readRecord(at: offset)
+
         return record
     }
 
@@ -201,6 +204,10 @@ final class DBFFileReader {
         }
 
         return properties
+    }
+
+    private func offset(for index: Int) -> UInt64 {
+        return UInt64(header.headerSize + (index * header.recordSize))
     }
 }
 

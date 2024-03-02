@@ -44,6 +44,12 @@ extension Shapefile {
             self.shx = shx
         }
 
+        public init(shp: String, dbf: String, shx: String) {
+            self.shp = .init(fileURLWithPath: shp)
+            self.dbf = .init(fileURLWithPath: dbf)
+            self.shx = .init(fileURLWithPath: shx)
+        }
+
         public init(pathToFilesWithEqualName filePath: String) {
             self.shp = .init(fileURLWithPath: "\(filePath).shp")
             self.dbf = .init(fileURLWithPath: "\(filePath).dbf")

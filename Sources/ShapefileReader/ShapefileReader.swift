@@ -49,7 +49,7 @@ public class ShapefileReader {
 
         let offset = shxFile.offset(for: index)
         let shape = try shpFile.readShape(at: offset)
-        let record = try dbfFile.readRecord(at: offset)
+        let record = try dbfFile.readRecord(at: index)
 
         return (shape, record)
     }

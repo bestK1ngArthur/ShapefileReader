@@ -191,7 +191,7 @@ public protocol Partable {
 public extension Partable {
 
     var pointsByParts: [[Shapefile.Shape.Point]] {
-        guard points.count > 1 else {
+        guard parts.count > 1 else {
             return [points]
         }
 
