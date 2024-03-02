@@ -10,7 +10,7 @@ Simple [shapefile](https://en.wikipedia.org/wiki/Shapefile) `.shp`, `.dbf`, `.sh
 You can add **ShapefileReader** to an Xcode project by adding it as a package dependency.
 
 1. From the **File** menu, select **Add Package Dependencies...**.
-2. Enter `https://github.com/bestK1ngArthur/ShapefileReader` into the package repository URL text field and add package to project.
+2. Enter `https://github.com/bestK1ngArthur/ShapefileReader` into the package repository URL text field and add the package to your project.
 
 ## Examples
 
