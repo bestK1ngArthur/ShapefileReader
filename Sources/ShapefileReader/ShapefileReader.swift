@@ -10,7 +10,7 @@ public class ShapefileReader {
 
     public init() {}
 
-    /// Reads alll shapes and support data from files
+    /// Reads all shapes and support data from files
     /// - parameter path: Path to shapefile files
     /// - returns: Shapefile struct
     public func read(
@@ -30,8 +30,8 @@ public class ShapefileReader {
             minBoundingBox: shpFile.minBoundingBox,
             zRange: shpFile.zRange,
             mRange: shpFile.mRange,
-            shapes: try shpFile.readShapes(),
-            records: try dbfFile.readRecords()
+            shapes: shapes,
+            records: records
         )
     }
 
